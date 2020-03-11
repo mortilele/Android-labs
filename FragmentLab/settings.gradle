@@ -1,0 +1,2 @@
+rootProject.name='FragmentLab'
+include ':app'
