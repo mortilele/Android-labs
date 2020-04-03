@@ -1,9 +1,11 @@
-package com.example.lab5;
+package com.example.lab5.room.database;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.lab5.ToDo;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ public interface ToDoDao {
     List<ToDo> getToDos();
 
     @Query("SELECT * FROM todos WHERE id = :id")
-    ToDo getToDOById(int id);
+    ToDo getToDoById(int id);
 
     @Insert
     void insert(ToDo todo);

@@ -5,6 +5,8 @@ import android.util.Log;
 
 import androidx.room.Room;
 
+import com.example.lab5.room.database.AppDatabase;
+
 public class MyApplication extends Application {
     public static MyApplication instance;
 
@@ -19,6 +21,15 @@ public class MyApplication extends Application {
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
+        try {
+//            create default category set
+            database.categoryDao().insert(new Category("BackLog"));
+            database.categoryDao().insert(new Category("Test"));
+            database.categoryDao().insert(new Category("Merge request"));
+            database.categoryDao().insert(new Category("Done"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static MyApplication getInstance() {

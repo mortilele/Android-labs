@@ -1,22 +1,15 @@
 package com.example.lab5;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
-
-import static androidx.room.ColumnInfo.TEXT;
-
 @Entity(tableName = "todos",
-        foreignKeys = @ForeignKey(entity = Category.class, parentColumns = "id", childColumns = "category_id"),
-        indices = {@Index("title")}
+        foreignKeys = @ForeignKey(entity = Category.class, parentColumns = "id", childColumns = "category_id")
 )
-
 public class ToDo {
+
     @PrimaryKey(autoGenerate = true)
     public int id;
 
@@ -24,14 +17,23 @@ public class ToDo {
     public String title;
 
     @ColumnInfo(name = "description")
-    public String phone;
+    public String description;
 
     @ColumnInfo(name = "category_id")
-    public int CategoryId;
+    public int categoryId;
 
     @ColumnInfo(name = "status")
     public String status;
 
     @ColumnInfo(name = "duration")
-    public Date duration;
+    public String duration;
+
+    public ToDo() {
+        this.status = "In process";
+    }
+
+    public ToDo(int categoryId) {
+        this.status = "In process";
+        this.categoryId = categoryId;
+    }
 }

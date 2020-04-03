@@ -1,10 +1,12 @@
-package com.example.lab5;
+package com.example.lab5.room.database;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.lab5.Category;
 
 import java.util.List;
 
@@ -14,7 +16,10 @@ public interface CategoryDao {
     List<Category> getCategories();
 
     @Query("SELECT * FROM categories WHERE id = :id")
-    CategoryWithToDo getCategoryById(int id);
+    Category getCategoryById(int id);
+
+    @Query("SELECT * FROM categories WHERE id = :id")
+    CategoryWithToDo getCategoryDetail(int id);
 
     @Insert
     void insert(Category category);
