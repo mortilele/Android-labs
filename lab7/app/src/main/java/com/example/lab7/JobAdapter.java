@@ -74,7 +74,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (finalIs_favorite == true) {
+                if (finalIs_favorite) {
                     holder.like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
                     favoriteDao.delete(new Favorite(job.getId()));
                 } else {

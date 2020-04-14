@@ -14,7 +14,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e("MyApplication", "onCreate");
         instance = this;
         database = Room.databaseBuilder(this, AppDatabase.class, "favorites_db")
                 .fallbackToDestructiveMigration()

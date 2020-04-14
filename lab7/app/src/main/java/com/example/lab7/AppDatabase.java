@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase;
 
 
 
-@Database(entities = {Favorite.class}, version = 1)
+@Database(entities = {Favorite.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract FavoriteDao favoriteDao();

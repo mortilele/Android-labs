@@ -60,6 +60,11 @@ public class JobDetailFragment extends Fragment {
         company = view.findViewById(R.id.job_company);
         company_logo = view.findViewById(R.id.job_company_logo);
         created_at = view.findViewById(R.id.job_created_at);
+        title = view.findViewById(R.id.job_detail_title);
+        location = view.findViewById(R.id.job_location);
+        type = view.findViewById(R.id.job_type);
+        description = view.findViewById(R.id.job_detail_description);
+        how_to_apply = view.findViewById(R.id.job_detail_how_to_apply);
         company.setText(getArguments().getString("company"));
         Picasso.get()
                 .load(getArguments().getString("company_logo"))
@@ -68,6 +73,10 @@ public class JobDetailFragment extends Fragment {
                 .resize(200, 200)
                 .into(company_logo);
         created_at.setText(getArguments().getString("created_at"));
-
+        title.setText(getArguments().getString("title"));
+        location.setText(getArguments().getString("location"));
+        type.setText(getArguments().getString("type"));
+        description.setText(getArguments().getString("description"));
+        how_to_apply.setText(getArguments().getString("how_to_apply"));
     }
 }

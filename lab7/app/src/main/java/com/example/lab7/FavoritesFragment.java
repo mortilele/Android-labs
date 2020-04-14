@@ -57,7 +57,6 @@ public class FavoritesFragment extends Fragment {
                 .build();
         APIService apiService = retrofit.create(APIService.class);
         for (Favorite favorite : favorites) {
-            System.out.println(favorite.id);
             Call<Job> call = apiService.getJobById(favorite.id);
             call.enqueue(new Callback<Job>() {
                 @Override
