@@ -15,6 +15,10 @@ public class Job {
     private String how_to_apply;
     private String company_logo;
 
+    public Job() {
+
+    }
+
     public Job(String id,
                String type,
                String url,

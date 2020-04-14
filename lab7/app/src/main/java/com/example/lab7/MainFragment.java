@@ -8,8 +8,13 @@ import android.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +28,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainFragment extends Fragment {
 
+    public JobAdapter adapter;
+    public JobAdapter.jobItemClickListener listener;
+    public RecyclerView recyclerView;
+    public List<Job> jobs;
+
+    public MainFragment() {
+        // Required empty public constructor
+    }
+
     public static MainFragment newInstance() {
         return new MainFragment();
     }
@@ -32,8 +46,15 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.main_fragment, container, false);
-        final RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Jobs");
+        setHasOptionsMenu(true);
+        recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+        return view;
+    }
+
+    public void getJobs() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://jobs.github.com/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -47,8 +68,8 @@ public class MainFragment extends Fragment {
                     Log.e("get jobs, Code:", ""+response.code());
                     return;
                 }
-                List<Job> jobs = response.body();
-                JobAdapter.jobItemClickListener listener = new JobAdapter.jobItemClickListener() {
+                jobs = response.body();
+                listener = new JobAdapter.jobItemClickListener() {
                     @Override
                     public void itemClick(int position, Job job) {
                         getFragmentManager()
@@ -58,15 +79,41 @@ public class MainFragment extends Fragment {
                                 .commitAllowingStateLoss();
                     }
                 };
-                JobAdapter adapter = new JobAdapter(jobs, listener);
+                // Hard coded..
+                adapter = new JobAdapter(jobs, listener);
                 recyclerView.setAdapter(adapter);
             }
-
             @Override
             public void onFailure(Call<List<Job>> call, Throwable t) {
                 Log.e("fail get jobs", t.getMessage());
             }
         });
-        return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.getJobs();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.action_bar, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_filter:
+                // do stuff
+                return true;
+
+            case R.id.action_search:
+                // do more stuff
+                return true;
+        }
+
+        return false;
     }
 }

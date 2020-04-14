@@ -1,11 +1,10 @@
 package com.example.lab7;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.Menu;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -30,13 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
                 switch(item.getItemId()) {
                     case R.id.nav_jobs:
-                        selectedFragment = new MainFragment();
+                        selectedFragment = MainFragment.newInstance();
                         break;
                     case R.id.nav_favorites:
-                        selectedFragment = new FavoritesFragment();
+                        selectedFragment = FavoritesFragment.newInstance();
                         break;
                     case R.id.nav_more:
-                        selectedFragment = new MoreFragment();
+                        selectedFragment = MoreFragment.newInstance();
                         break;
                 }
                 replaceFragment(selectedFragment);
@@ -44,9 +43,12 @@ public class MainActivity extends AppCompatActivity {
             };
 
     public void replaceFragment(Fragment someFragment) {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, someFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, someFragment)
+                .addToBackStack("second")
+                .commitAllowingStateLoss();
     }
+
+
 }
