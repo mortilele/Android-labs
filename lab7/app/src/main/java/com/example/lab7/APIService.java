@@ -12,14 +12,14 @@ public interface APIService {
     @GET("positions.json?page=1&markdown=true")
     Call<List<Job>> getJobs();
 
-    @GET("positions.json")
+    @GET("positions.json?markdown=true")
     Call<List<Job>> getJobsFromSearch(@Query("search") String search);
 
-    @GET("positions.json")
+    @GET("positions.json?markdown=true")
     Call<List<Job>> getFilteredJobs(@Query("description") String description,
                                     @Query("location") String location,
                                     @Query("full_time") boolean full_time);
 
-    @GET("positions/{id}.json")
+    @GET("positions/{id}.json?markdown=true")
     Call<Job> getJobById(@Path("id") String jobId);
 }
