@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,7 +56,7 @@ public class UniversityListFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Университеты");
         setHasOptionsMenu(true);
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         adapter = new UniversityAdapter(universityList, listener);
         recyclerView.setAdapter(adapter);
         getUniversities();
@@ -78,7 +79,7 @@ public class UniversityListFragment extends Fragment {
 
     public void fetchResponse(Response<List<UniversityList>> response) {
         if (!response.isSuccessful()) {
-            Log.e("get jobs, Code:", ""+response.code());
+            Log.e("get universities, Code:", ""+response.code());
             return;
         }
         if (response.body() != null) {

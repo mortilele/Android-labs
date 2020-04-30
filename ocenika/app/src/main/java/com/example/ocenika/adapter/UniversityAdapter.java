@@ -39,7 +39,7 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Un
     @Override
     public void onBindViewHolder(@NonNull UniversityViewHolder holder, int position) {
         final UniversityList university = universityList.get(position);
-        holder.nameView.setText(university.getName());
+        holder.nameView.setText(university.getAbbreviation());
         Picasso.get()
                 .load(university.getLogo())
                 .placeholder(R.drawable.ic_image_black_24dp)

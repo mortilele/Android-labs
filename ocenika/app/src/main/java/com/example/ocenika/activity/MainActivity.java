@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.example.ocenika.R;
 import com.example.ocenika.fragment.ProfessorListFragment;
+import com.example.ocenika.fragment.ProfileFragment;
 import com.example.ocenika.fragment.UniversityListFragment;
 import com.example.ocenika.service.UserService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -40,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_professors:
                         selectedFragment = ProfessorListFragment.newInstance();
-//                        break;
-//                    case R.id.nav_profile:
-//                        selectedFragment = ProfileFragment.newInstance();
-//                        break;
+                        break;
+                    case R.id.nav_profile:
+                        selectedFragment = ProfileFragment.newInstance();
+                        break;
                 }
                 replaceFragment(selectedFragment);
                 return true;

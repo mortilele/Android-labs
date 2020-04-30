@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ocenika.R;
+import com.example.ocenika.adapter.ProfessorAdapter;
 import com.example.ocenika.adapter.UniversityAdapter;
+import com.example.ocenika.model.ProfessorList;
 import com.example.ocenika.model.UniversityList;
 import com.example.ocenika.service.APIService;
 
@@ -32,9 +34,13 @@ public class ProfessorListFragment extends Fragment {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     APIService apiService = retrofit.create(APIService.class);
-    public UniversityAdapter adapter;
-    public UniversityAdapter.universityItemClickListener listener;
-    public List<UniversityList> universityList = new ArrayList<>();
+    public ProfessorAdapter.professorItemClickListener listener = (position, professorId) -> getFragmentManager()
+            .beginTransaction()
+            .replace(R.id.container, ProfessorDetailFragment.newInstance(professorId))
+            .addToBackStack("second")
+            .commitAllowingStateLoss();
+    public ProfessorAdapter adapter;
+    public List<ProfessorList> professorList = new ArrayList<>();
     public RecyclerView recyclerView;
 
 
@@ -55,36 +61,42 @@ public class ProfessorListFragment extends Fragment {
         setHasOptionsMenu(true);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new UniversityAdapter(universityList, listener);
+        adapter = new ProfessorAdapter(professorList, listener);
         recyclerView.setAdapter(adapter);
-        getUniversities();
         return view;
     }
 
-    public void getUniversities() {
-        Call<List<UniversityList>> call = apiService.getUniversities();
-        call.enqueue(new Callback<List<UniversityList>>() {
+    public void getProfessors() {
+        Call<List<ProfessorList>> call = apiService.getProfessors();
+        call.enqueue(new Callback<List<ProfessorList>>() {
             @Override
-            public void onResponse(Call<List<UniversityList>> call, Response<List<UniversityList>> response) {
+            public void onResponse(Call<List<ProfessorList>> call, Response<List<ProfessorList>> response) {
                 fetchResponse(response);
             }
 
             @Override
-            public void onFailure(Call<List<UniversityList>> call, Throwable t) {
-                Log.e("fail get universities", t.getMessage());
+            public void onFailure(Call<List<ProfessorList>> call, Throwable t) {
+                Log.e("fetch professors", t.getMessage());
             }
         });
+
     }
 
-    public void fetchResponse(Response<List<UniversityList>> response) {
+    public void fetchResponse(Response<List<ProfessorList>> response) {
         if (!response.isSuccessful()) {
-            Log.e("get jobs, Code:", "" + response.code());
+            Log.e("get professors, Code:", "" + response.code());
             return;
         }
         if (response.body() != null) {
-            universityList.clear();
-            universityList.addAll(response.body());
+            professorList.clear();
+            professorList.addAll(response.body());
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getProfessors();
     }
 }
