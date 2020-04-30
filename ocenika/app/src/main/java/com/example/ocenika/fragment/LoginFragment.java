@@ -47,7 +47,7 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Войти");
-        view.findViewById(R.id.login).setOnClickListener(v -> login());
+        view.findViewById(R.id.login).setOnClickListener(v -> login(view));
         view.findViewById(R.id.login_skip).setOnClickListener(v -> skip());
         view.findViewById(R.id.register).setOnClickListener(v -> getFragmentManager()
                 .beginTransaction()
@@ -56,7 +56,7 @@ public class LoginFragment extends Fragment {
                 .commitAllowingStateLoss());
     }
 
-    public void login() {
+    public void login(View view) {
         Login login = new Login("admin", "admin");
         Call<Token> call = userService.login(login);
         call.enqueue(new Callback<Token>() {

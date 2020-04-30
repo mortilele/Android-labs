@@ -11,21 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ocenika.R;
 import com.example.ocenika.fragment.LoginFragment;
-import com.example.ocenika.fragment.UniversityListFragment;
-import com.example.ocenika.model.Login;
-import com.example.ocenika.model.Token;
-import com.example.ocenika.service.UserService;
 import com.example.ocenika.util.PreferenceUtils;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
