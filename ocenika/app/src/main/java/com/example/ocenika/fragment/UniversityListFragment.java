@@ -30,12 +30,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UniversityListFragment extends Fragment {
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://api.ocenika.com/")
+            .baseUrl("http://192.168.1.5:8000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     APIService apiService = retrofit.create(APIService.class);
     public UniversityAdapter adapter;
-    public UniversityAdapter.universityItemClickListener listener;
+    public UniversityAdapter.universityItemClickListener listener = (position, universityId) -> getFragmentManager()
+            .beginTransaction()
+            .replace(R.id.container, ProfessorListFragment.newInstance(universityId))
+            .addToBackStack("second")
+            .commitAllowingStateLoss();
     public List<UniversityList> universityList = new ArrayList<>();
     public RecyclerView recyclerView;
 
@@ -59,7 +63,6 @@ public class UniversityListFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         adapter = new UniversityAdapter(universityList, listener);
         recyclerView.setAdapter(adapter);
-        getUniversities();
         return view;
     }
 
@@ -89,5 +92,9 @@ public class UniversityListFragment extends Fragment {
         }
     }
 
-
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getUniversities();
+    }
 }

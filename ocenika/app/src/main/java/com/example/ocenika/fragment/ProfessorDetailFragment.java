@@ -36,7 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProfessorDetailFragment extends Fragment {
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://api.ocenika.com/")
+            .baseUrl("http://192.168.1.5:8000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     APIService apiService = retrofit.create(APIService.class);
@@ -127,7 +127,6 @@ public class ProfessorDetailFragment extends Fragment {
             commentList.clear();
             commentList.addAll(professor.getRatings());
             adapter.notifyDataSetChanged();
-            System.out.println(professor);
             fullNameView.setText(professor.getFull_name());
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(professor.getFull_name());
         }

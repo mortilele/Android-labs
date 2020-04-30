@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RegisterFragment extends Fragment {
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://api.ocenika.com/")
+            .baseUrl("http://192.168.1.5:8000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     UserService userService = retrofit.create(UserService.class);
@@ -48,9 +48,12 @@ public class RegisterFragment extends Fragment {
     }
 
     public void register(View view) {
-        EditText usernameEdit = view.findViewById(R.id.register_username);
-        String username = usernameEdit.getText().toString();
-        User user = new User(username, "someveryHardPass2", "alik", "akhmetov", "ali.mars.99@gmail.com");
+        String username = ((EditText)view.findViewById(R.id.register_username)).getText().toString();
+        String password = ((EditText)view.findViewById(R.id.register_password)).getText().toString();
+        String firstName = ((EditText)view.findViewById(R.id.register_first_name)).getText().toString();
+        String lastName = ((EditText)view.findViewById(R.id.register_last_name)).getText().toString();
+        String email = ((EditText)view.findViewById(R.id.register_email)).getText().toString();
+        User user = new User(username, password, firstName, lastName, email);
         Call<ResponseBody> call = userService.createUser(user);
         call.enqueue(new Callback<ResponseBody>() {
             @Override

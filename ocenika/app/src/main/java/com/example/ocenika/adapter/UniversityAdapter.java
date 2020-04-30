@@ -14,8 +14,6 @@ import com.example.ocenika.R;
 import com.example.ocenika.model.UniversityList;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.UniversityViewHolder> {
@@ -46,7 +44,11 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Un
                 .error(R.drawable.ic_image_black_24dp)
                 .resize(200, 200)
                 .into(holder.logoView);
-        System.out.println(university);
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.itemClick(position, university.getId());
+            }
+        });
     }
 
     @Override
@@ -67,6 +69,6 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Un
 
 
     public interface universityItemClickListener {
-        void itemClick(int position, UniversityList university);
+        void itemClick(int position, int universityId);
     }
 }

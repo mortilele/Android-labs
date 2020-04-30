@@ -3,8 +3,13 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProfessorListFragment extends Fragment {
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://api.ocenika.com/")
+            .baseUrl("http://192.168.1.5:8000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     APIService apiService = retrofit.create(APIService.class);
@@ -48,6 +53,14 @@ public class ProfessorListFragment extends Fragment {
 
     public static ProfessorListFragment newInstance() {
         return new ProfessorListFragment();
+    }
+
+    public static ProfessorListFragment newInstance(int universityId) {
+        ProfessorListFragment fragment = new ProfessorListFragment();
+        Bundle data = new Bundle();
+        data.putInt("id", universityId);
+        fragment.setArguments(data);
+        return fragment;
     }
 
     @Nullable
@@ -77,7 +90,21 @@ public class ProfessorListFragment extends Fragment {
                 Log.e("fetch professors", t.getMessage());
             }
         });
+    }
 
+    public void getProfessorsByUniversity(int universityId) {
+        Call<List<ProfessorList>> call = apiService.getProfessorsByUniversity(universityId);
+        call.enqueue(new Callback<List<ProfessorList>>() {
+            @Override
+            public void onResponse(Call<List<ProfessorList>> call, Response<List<ProfessorList>> response) {
+                fetchResponse(response);
+            }
+
+            @Override
+            public void onFailure(Call<List<ProfessorList>> call, Throwable t) {
+                Log.e("fetch professors", t.getMessage());
+            }
+        });
     }
 
     public void fetchResponse(Response<List<ProfessorList>> response) {
@@ -93,8 +120,14 @@ public class ProfessorListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getProfessors();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getArguments() != null && getArguments().containsKey("id") ) {
+            int universityId = getArguments().getInt("id");
+            getProfessorsByUniversity(universityId);
+        }
+        else {
+            getProfessors();
+        }
     }
 }

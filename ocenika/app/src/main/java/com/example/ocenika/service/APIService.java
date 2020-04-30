@@ -13,6 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIService {
 
@@ -21,6 +22,9 @@ public interface APIService {
 
     @GET("api/professors/")
     Call<List<ProfessorList>> getProfessors();
+
+    @GET("api/professors/")
+    Call<List<ProfessorList>> getProfessorsByUniversity(@Query("universities") int universityId);
 
     @GET("api/professors/{id}")
     Call<ProfessorList> getProfessorById(@Path("id") int professorId);

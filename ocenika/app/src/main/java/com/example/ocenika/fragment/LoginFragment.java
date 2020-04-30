@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -28,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginFragment extends Fragment {
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://api.ocenika.com/")
+            .baseUrl("http://192.168.1.5:8000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     UserService userService = retrofit.create(UserService.class);
@@ -57,7 +58,9 @@ public class LoginFragment extends Fragment {
     }
 
     public void login(View view) {
-        Login login = new Login("admin", "admin");
+        String username = ((EditText)view.findViewById(R.id.username)).getText().toString();
+        String password = ((EditText)view.findViewById(R.id.password)).getText().toString();
+        Login login = new Login(username, password);
         Call<Token> call = userService.login(login);
         call.enqueue(new Callback<Token>() {
             @Override
