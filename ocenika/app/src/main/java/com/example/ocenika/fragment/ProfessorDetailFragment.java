@@ -80,23 +80,25 @@ public class ProfessorDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (PreferenceUtils.getToken(getActivity()) != null && !PreferenceUtils.getToken(getActivity()).equals("")) {
-                    String token = PreferenceUtils.getToken(getActivity());
-                    Comment comment = new Comment();
-                    String commentEmail = commentEmailEditText.getText().toString();
-                    comment.setEmail(commentEmail);
-                    comment.setProfessor(professorId);
-                    Call<ResponseBody> call = apiService.addComment(comment, "Token " + token);
-                    call.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            fetchPostComment(response);
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    CommentDialog commentDialog = new CommentDialog();
+                    commentDialog.show(getFragmentManager(), "CommentDialog");
+//                    String token = PreferenceUtils.getToken(getActivity());
+//                    Comment comment = new Comment();
+//                    String commentEmail = commentEmailEditText.getText().toString();
+//                    comment.setEmail(commentEmail);
+//                    comment.setProfessor(professorId);
+//                    Call<ResponseBody> call = apiService.addComment(comment, "Token " + token);
+//                    call.enqueue(new Callback<ResponseBody>() {
+//                        @Override
+//                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                            fetchPostComment(response);
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                            Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
                 }
                 else {
                     Toast.makeText(getActivity(), "Вам нужно войти", Toast.LENGTH_SHORT).show();

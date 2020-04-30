@@ -1,7 +1,5 @@
 package com.example.ocenika.model;
 
-import com.google.gson.JsonObject;
-
 import java.util.List;
 
 public class ProfessorList {
@@ -14,13 +12,13 @@ public class ProfessorList {
     private int average_rating;
     private int rating_count;
     private List<Comment> ratings;
-    private List<JsonObject> subjects;
+    private List<Subject> subjects;
     private List<ProfessorList> universities;
 
     public ProfessorList() {
     }
 
-    public ProfessorList(int id, String first_name, String last_name, String patronymic, String avatar, int average_rating, int rating_count, List<Comment> ratings, List<JsonObject> subjects, List<ProfessorList> universities) {
+    public ProfessorList(int id, String first_name, String last_name, String patronymic, String avatar, int average_rating, int rating_count, List<Comment> ratings, List<Subject> subjects, List<ProfessorList> universities) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -101,11 +99,11 @@ public class ProfessorList {
         this.ratings = ratings;
     }
 
-    public List<JsonObject> getSubjects() {
+    public List<Subject> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(List<JsonObject> subjects) {
+    public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
     }
 
@@ -124,4 +122,14 @@ public class ProfessorList {
     public void setFull_name(String full_name) {
         this.full_name = full_name;
     }
+
+    public String concatSubjects() {
+        StringBuilder result = new StringBuilder();
+        for (Subject subject : subjects) {
+            result.append(subject.getAbbreviation()).append(" ");
+        }
+        return result.toString();
+    }
+
+
 }
