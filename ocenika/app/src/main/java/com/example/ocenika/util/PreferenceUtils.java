@@ -10,10 +10,10 @@ public class PreferenceUtils {
 
     }
 
-    public static boolean saveToken(String email, Context context) {
+    public static boolean saveToken(String token, Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor prefsEditor = prefs.edit();
-        prefsEditor.putString(Constants.KEY_TOKEN, email);
+        prefsEditor.putString(Constants.KEY_TOKEN, token);
         prefsEditor.apply();
         return true;
     }
