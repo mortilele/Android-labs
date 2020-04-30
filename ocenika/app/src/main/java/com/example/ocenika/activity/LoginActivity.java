@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.5:8000/")
+            .baseUrl("http://api.ocenika.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     UserService userService = retrofit.create(UserService.class);

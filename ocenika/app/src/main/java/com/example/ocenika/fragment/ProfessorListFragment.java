@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ocenika.R;
 import com.example.ocenika.adapter.ProfessorAdapter;
-import com.example.ocenika.adapter.UniversityAdapter;
 import com.example.ocenika.model.ProfessorList;
-import com.example.ocenika.model.UniversityList;
 import com.example.ocenika.service.APIService;
 
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProfessorListFragment extends Fragment {
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.5:8000/")
+            .baseUrl("http://api.ocenika.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     APIService apiService = retrofit.create(APIService.class);

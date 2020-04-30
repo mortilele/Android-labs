@@ -36,7 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProfessorDetailFragment extends Fragment {
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.5:8000/")
+            .baseUrl("http://api.ocenika.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     APIService apiService = retrofit.create(APIService.class);
