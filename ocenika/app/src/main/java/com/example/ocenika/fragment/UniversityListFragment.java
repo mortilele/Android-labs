@@ -11,12 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ocenika.R;
 import com.example.ocenika.adapter.UniversityAdapter;
-import com.example.ocenika.model.UniversityList;
+import com.example.ocenika.model.University;
 import com.example.ocenika.service.APIService;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class UniversityListFragment extends Fragment {
             .replace(R.id.container, ProfessorListFragment.newInstance(universityId))
             .addToBackStack("second")
             .commitAllowingStateLoss();
-    public List<UniversityList> universityList = new ArrayList<>();
+    public List<University> university = new ArrayList<>();
     public RecyclerView recyclerView;
 
 
@@ -61,33 +60,33 @@ public class UniversityListFragment extends Fragment {
         setHasOptionsMenu(true);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        adapter = new UniversityAdapter(universityList, listener);
+        adapter = new UniversityAdapter(university, listener);
         recyclerView.setAdapter(adapter);
         return view;
     }
 
     public void getUniversities() {
-        Call<List<UniversityList>> call = apiService.getUniversities();
-        call.enqueue(new Callback<List<UniversityList>>() {
+        Call<List<University>> call = apiService.getUniversities();
+        call.enqueue(new Callback<List<University>>() {
             @Override
-            public void onResponse(Call<List<UniversityList>> call, Response<List<UniversityList>> response) {
+            public void onResponse(Call<List<University>> call, Response<List<University>> response) {
                 fetchResponse(response);
             }
             @Override
-            public void onFailure(Call<List<UniversityList>> call, Throwable t) {
+            public void onFailure(Call<List<University>> call, Throwable t) {
                 Log.e("fail get universities", t.getMessage());
             }
         });
     }
 
-    public void fetchResponse(Response<List<UniversityList>> response) {
+    public void fetchResponse(Response<List<University>> response) {
         if (!response.isSuccessful()) {
             Log.e("get universities, Code:", ""+response.code());
             return;
         }
         if (response.body() != null) {
-            universityList.clear();
-            universityList.addAll(response.body());
+            university.clear();
+            university.addAll(response.body());
             adapter.notifyDataSetChanged();
         }
     }

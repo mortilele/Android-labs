@@ -11,18 +11,18 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ocenika.R;
-import com.example.ocenika.model.UniversityList;
+import com.example.ocenika.model.University;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.UniversityViewHolder> {
-    public List<UniversityList> universityList;
+    public List<University> university;
     private universityItemClickListener listener;
 
 
-    public UniversityAdapter(@Nullable List<UniversityList> universityLists, @Nullable universityItemClickListener listener) {
-        this.universityList = universityLists;
+    public UniversityAdapter(@Nullable List<University> universities, @Nullable universityItemClickListener listener) {
+        this.university = universities;
         this.listener = listener;
     }
 
@@ -36,7 +36,7 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Un
 
     @Override
     public void onBindViewHolder(@NonNull UniversityViewHolder holder, int position) {
-        final UniversityList university = universityList.get(position);
+        final University university = this.university.get(position);
         holder.nameView.setText(university.getAbbreviation());
         Picasso.get()
                 .load(university.getLogo())
@@ -52,7 +52,7 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Un
 
     @Override
     public int getItemCount() {
-        return universityList.size();
+        return university.size();
     }
 
     public class UniversityViewHolder extends RecyclerView.ViewHolder {

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ocenika.R;
 import com.example.ocenika.model.Comment;
+import com.example.ocenika.util.StringUtils;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         final Comment comment = commentList.get(position);
-        holder.dateView.setText(comment.dateFormatted());
+        holder.dateView.setText(StringUtils.dateFormatted(comment.getCreated_at()));
         if (comment.getReview() != null && !comment.getReview().isEmpty()) {
             holder.textView.setText(comment.getReview());
         }

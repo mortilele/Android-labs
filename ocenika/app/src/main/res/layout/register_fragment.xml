@@ -10,7 +10,7 @@
         android:id="@+id/register_first_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:hint="@string/prompt_first_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.100"
@@ -55,7 +55,7 @@
         android:id="@+id/register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:hint="@string/prompt_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.200"
@@ -64,7 +64,9 @@
 
     <Button
         android:id="@+id/register_btn"
-        android:layout_width="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorWhite"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="@string/action_register"

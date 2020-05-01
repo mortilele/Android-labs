@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 
 import java.util.List;
 
-public class UniversityList {
+public class University {
     private int id;
     private String name;
     private String abbreviation;
@@ -13,10 +13,10 @@ public class UniversityList {
     private List<JsonObject> professor_set;
     private List<JsonObject> subjects;
 
-    public UniversityList() {
+    public University() {
     }
 
-    public UniversityList(int id, String name, String description, String logo, List<JsonObject> professor_set, List<JsonObject> subjects) {
+    public University(int id, String name, String description, String logo, List<JsonObject> professor_set, List<JsonObject> subjects) {
         this.id = id;
         this.name = name;
         this.description = description;

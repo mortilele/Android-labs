@@ -1,12 +1,11 @@
 package com.example.ocenika.service;
 
 import com.example.ocenika.model.Comment;
-import com.example.ocenika.model.ProfessorList;
-import com.example.ocenika.model.UniversityList;
+import com.example.ocenika.model.Professor;
+import com.example.ocenika.model.University;
 
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -18,16 +17,16 @@ import retrofit2.http.Query;
 public interface APIService {
 
     @GET("api/universities/")
-    Call<List<UniversityList>> getUniversities();
+    Call<List<University>> getUniversities();
 
     @GET("api/professors/")
-    Call<List<ProfessorList>> getProfessors();
+    Call<List<Professor>> getProfessors();
 
     @GET("api/professors/")
-    Call<List<ProfessorList>> getProfessorsByUniversity(@Query("universities") int universityId);
+    Call<List<Professor>> getProfessorsByUniversity(@Query("universities") int universityId);
 
     @GET("api/professors/{id}")
-    Call<ProfessorList> getProfessorById(@Path("id") int professorId);
+    Call<Professor> getProfessorById(@Path("id") int professorId);
 
     @POST("api/ratings/")
     Call<Comment> addComment(@Body Comment comment,

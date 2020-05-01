@@ -11,18 +11,18 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ocenika.R;
-import com.example.ocenika.model.ProfessorList;
+import com.example.ocenika.model.Professor;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.ProfessorViewHolder> {
-    public List<ProfessorList> professorList;
+    public List<Professor> professor;
     private professorItemClickListener listener;
 
 
-    public ProfessorAdapter(@Nullable List<ProfessorList> universityLists, @Nullable professorItemClickListener listener) {
-        this.professorList = universityLists;
+    public ProfessorAdapter(@Nullable List<Professor> universityLists, @Nullable professorItemClickListener listener) {
+        this.professor = universityLists;
         this.listener = listener;
     }
 
@@ -36,7 +36,7 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
 
     @Override
     public void onBindViewHolder(@NonNull ProfessorViewHolder holder, int position) {
-        final ProfessorList professor = professorList.get(position);
+        final Professor professor = this.professor.get(position);
         holder.nameView.setText(professor.getFull_name());
         holder.subjectsView.setText(professor.concatSubjects());
         holder.universitiesView.setText(professor.concatUniversities());
@@ -55,7 +55,7 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
 
     @Override
     public int getItemCount() {
-        return professorList.size();
+        return professor.size();
     }
 
     public class ProfessorViewHolder extends RecyclerView.ViewHolder {

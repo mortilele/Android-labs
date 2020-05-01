@@ -19,8 +19,7 @@ import com.example.ocenika.R;
 import com.example.ocenika.model.Comment;
 import com.example.ocenika.service.APIService;
 import com.example.ocenika.util.PreferenceUtils;
-
-import java.util.Random;
+import com.example.ocenika.util.StringUtils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,16 +102,7 @@ public class CommentDialogFragment extends DialogFragment {
         }
     }
 
-    public String fakeEmailGenerator() {
-        String CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder email = new StringBuilder();
-        Random rnd = new Random();
-        while (email.length() < 10) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * CHARSET.length());
-            email.append(CHARSET.charAt(index));
-        }
-        return email.toString() +  "@gmail.com";
-    }
+
 
     private TextView.OnClickListener addCommentListener = view -> {
         String input = commentInput.getText().toString();
@@ -120,7 +110,7 @@ public class CommentDialogFragment extends DialogFragment {
             String token = PreferenceUtils.getToken(getActivity());
             Comment comment = new Comment();
             comment.setReview(input);
-            comment.setEmail(fakeEmailGenerator());
+            comment.setEmail(StringUtils.fakeEmailGenerator());
             comment.setProfessor(professorId);
             Call<Comment> call = apiService.addComment(comment, "Token " + token);
             call.enqueue(new Callback<Comment>() {

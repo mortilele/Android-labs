@@ -59,10 +59,5 @@ public class Comment {
         this.professor = professor;
     }
 
-    public String dateFormatted() {
-        String pattern = "MM-dd-yyyy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String formattedDate = simpleDateFormat.format(this.created_at);
-        return formattedDate;
-    }
+
 }

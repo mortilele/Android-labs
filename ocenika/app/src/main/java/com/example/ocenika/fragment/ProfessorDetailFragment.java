@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ocenika.R;
 import com.example.ocenika.adapter.CommentAdapter;
 import com.example.ocenika.model.Comment;
-import com.example.ocenika.model.ProfessorList;
+import com.example.ocenika.model.Professor;
 import com.example.ocenika.service.APIService;
 import com.example.ocenika.util.PreferenceUtils;
 
@@ -77,13 +77,13 @@ public class ProfessorDetailFragment extends Fragment implements CommentDialogFr
         getProfessor();
     }
 
-    public void fetchResponse(Response<ProfessorList> response) {
+    public void fetchResponse(Response<Professor> response) {
         if (!response.isSuccessful()) {
             Log.e("get professors, Code:", "" + response.code());
             return;
         }
         if (response.body() != null) {
-            ProfessorList professor = response.body();
+            Professor professor = response.body();
             commentList.clear();
             commentList.addAll(professor.getRatings());
             adapter.notifyDataSetChanged();
@@ -95,15 +95,15 @@ public class ProfessorDetailFragment extends Fragment implements CommentDialogFr
     }
 
     public void getProfessor() {
-        Call<ProfessorList> call = apiService.getProfessorById(professorId);
-        call.enqueue(new Callback<ProfessorList>() {
+        Call<Professor> call = apiService.getProfessorById(professorId);
+        call.enqueue(new Callback<Professor>() {
             @Override
-            public void onResponse(Call<ProfessorList> call, Response<ProfessorList> response) {
+            public void onResponse(Call<Professor> call, Response<Professor> response) {
                 fetchResponse(response);
             }
 
             @Override
-            public void onFailure(Call<ProfessorList> call, Throwable t) {
+            public void onFailure(Call<Professor> call, Throwable t) {
                 Log.e("fetch professor", t.getMessage());
             }
         });

@@ -2,7 +2,7 @@ package com.example.ocenika.model;
 
 import java.util.List;
 
-public class ProfessorList {
+public class Professor {
     private int id;
     private String first_name;
     private String last_name;
@@ -13,12 +13,12 @@ public class ProfessorList {
     private int rating_count;
     private List<Comment> ratings;
     private List<Subject> subjects;
-    private List<UniversityList> universities;
+    private List<University> universities;
 
-    public ProfessorList() {
+    public Professor() {
     }
 
-    public ProfessorList(int id, String first_name, String last_name, String patronymic, String avatar, int average_rating, int rating_count, List<Comment> ratings, List<Subject> subjects, List<UniversityList> universities) {
+    public Professor(int id, String first_name, String last_name, String patronymic, String avatar, int average_rating, int rating_count, List<Comment> ratings, List<Subject> subjects, List<University> universities) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -107,11 +107,11 @@ public class ProfessorList {
         this.subjects = subjects;
     }
 
-    public List<UniversityList> getUniversities() {
+    public List<University> getUniversities() {
         return universities;
     }
 
-    public void setUniversities(List<UniversityList> universities) {
+    public void setUniversities(List<University> universities) {
         this.universities = universities;
     }
 
