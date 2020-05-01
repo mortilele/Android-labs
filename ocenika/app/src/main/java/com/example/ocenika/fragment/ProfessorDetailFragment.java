@@ -34,7 +34,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ProfessorDetailFragment extends Fragment {
+public class ProfessorDetailFragment extends Fragment implements CommentDialogFragment.OnInputSelected {
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://192.168.1.5:8000/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -45,7 +45,6 @@ public class ProfessorDetailFragment extends Fragment {
 
     public int professorId;
     public TextView fullNameView;
-    public EditText commentEmailEditText;
     public List<Comment> commentList = new ArrayList<>();
 
 
@@ -75,30 +74,13 @@ public class ProfessorDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         professorId = getArguments().getInt("id");
         fullNameView = view.findViewById(R.id.professor_detail_full_name);
-        commentEmailEditText = view.findViewById(R.id.professor_detail_comment_email);
         view.findViewById(R.id.professor_leave_comment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (PreferenceUtils.getToken(getActivity()) != null && !PreferenceUtils.getToken(getActivity()).equals("")) {
-                    CommentDialog commentDialog = new CommentDialog();
+                    CommentDialogFragment commentDialog = CommentDialogFragment.newInstance(professorId);
+                    commentDialog.setTargetFragment(ProfessorDetailFragment.this, 1337);
                     commentDialog.show(getFragmentManager(), "CommentDialog");
-//                    String token = PreferenceUtils.getToken(getActivity());
-//                    Comment comment = new Comment();
-//                    String commentEmail = commentEmailEditText.getText().toString();
-//                    comment.setEmail(commentEmail);
-//                    comment.setProfessor(professorId);
-//                    Call<ResponseBody> call = apiService.addComment(comment, "Token " + token);
-//                    call.enqueue(new Callback<ResponseBody>() {
-//                        @Override
-//                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                            fetchPostComment(response);
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                            Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
                 }
                 else {
                     Toast.makeText(getActivity(), "Вам нужно войти", Toast.LENGTH_SHORT).show();
@@ -134,15 +116,12 @@ public class ProfessorDetailFragment extends Fragment {
         }
     }
 
-
-    public void fetchPostComment(Response<ResponseBody> response) {
-        if (!response.isSuccessful()) {
-            Log.e("add comment, Code:", "" + response.code());
-            Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (response.body() != null) {
-            Toast.makeText(getActivity(), "Отзыв добавлен", Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    public void sendInput(Comment comment) {
+        System.out.println(comment.getReview());
+        commentList.add(comment);
+        int insertIndex = commentList.size();
+        System.out.println(insertIndex);
+        adapter.notifyItemInserted(insertIndex);
     }
 }

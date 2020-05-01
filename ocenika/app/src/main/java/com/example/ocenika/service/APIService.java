@@ -30,6 +30,6 @@ public interface APIService {
     Call<ProfessorList> getProfessorById(@Path("id") int professorId);
 
     @POST("api/ratings/")
-    Call<ResponseBody> addComment(@Body Comment comment,
+    Call<Comment> addComment(@Body Comment comment,
                                   @Header("authorization") String token);
 }

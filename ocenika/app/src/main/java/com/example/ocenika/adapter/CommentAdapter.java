@@ -34,7 +34,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         final Comment comment = commentList.get(position);
         if (comment.getReview() != null && !comment.getReview().isEmpty()) {
-            System.out.println(comment.getReview());
             holder.textView.setText(comment.getReview());
         }
 
