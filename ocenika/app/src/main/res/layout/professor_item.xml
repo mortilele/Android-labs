@@ -2,18 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="20dp"
+    android:layout_margin="14dp"
+    android:layout_marginStart="30dp"
+    android:padding="5dp"
     android:layout_width="match_parent"
+    android:background="@drawable/border"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/professor_full_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="28dp"
-        android:text="TextView"
+        android:layout_marginStart="12dp"
+        android:textColor="@color/colorPrimary"
+        android:text="Полное Фамилия Имя"
+        android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/professor_avatar"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,21 +24,34 @@
         android:id="@+id/professor_avatar"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_image_black_24dp" />
 
     <TextView
+        android:id="@+id/professor_universities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:ems="14"
+        android:singleLine="false"
+        android:text="Университеты"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/professor_avatar"
+        app:layout_constraintTop_toBottomOf="@+id/professor_full_name" />
+
+    <TextView
         android:id="@+id/professor_subjects"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="16dp"
-        android:text="TextView"
+        android:layout_marginStart="12dp"
+        android:ems="14"
+        android:singleLine="false"
+        android:text="Предметы"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/professor_avatar"
-        app:layout_constraintTop_toBottomOf="@+id/professor_full_name"
+        app:layout_constraintTop_toBottomOf="@+id/professor_universities"
         app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

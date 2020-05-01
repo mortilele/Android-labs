@@ -39,6 +39,7 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
         final ProfessorList professor = professorList.get(position);
         holder.nameView.setText(professor.getFull_name());
         holder.subjectsView.setText(professor.concatSubjects());
+        holder.universitiesView.setText(professor.concatUniversities());
         Picasso.get()
                 .load(professor.getAvatar())
                 .placeholder(R.drawable.ic_image_black_24dp)
@@ -61,12 +62,14 @@ public class ProfessorAdapter extends RecyclerView.Adapter<ProfessorAdapter.Prof
         TextView nameView;
         ImageView avatarView;
         TextView subjectsView;
+        TextView universitiesView;
 
         public ProfessorViewHolder(@NonNull View itemView) {
             super(itemView);
             nameView = itemView.findViewById(R.id.professor_full_name);
             avatarView = itemView.findViewById(R.id.professor_avatar);
             subjectsView = itemView.findViewById(R.id.professor_subjects);
+            universitiesView = itemView.findViewById(R.id.professor_universities);
         }
     }
 

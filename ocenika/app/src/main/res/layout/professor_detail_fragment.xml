@@ -7,31 +7,49 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/professor_detail_full_name"
+        android:id="@+id/professor_detail_promp_review"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="60dp"
-        android:text="TextView"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
+        android:text="Отзывы: "
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/professor_rating_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        android:text="0"
+        app:layout_constraintStart_toEndOf="@+id/professor_detail_promp_review"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/comment_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/professor_leave_comment"
-        app:layout_constraintTop_toBottomOf="@+id/professor_detail_full_name"
+        app:layout_constraintTop_toBottomOf="@+id/professor_detail_promp_review"
         tools:listitem="@layout/comment_item" />
 
     <Button
         android:id="@+id/professor_leave_comment"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_margin="10dp"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/colorWhite"
         android:text="Оставить отзыв"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

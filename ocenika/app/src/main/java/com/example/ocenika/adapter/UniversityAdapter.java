@@ -42,7 +42,6 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Un
                 .load(university.getLogo())
                 .placeholder(R.drawable.ic_image_black_24dp)
                 .error(R.drawable.ic_image_black_24dp)
-                .resize(200, 200)
                 .into(holder.logoView);
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {

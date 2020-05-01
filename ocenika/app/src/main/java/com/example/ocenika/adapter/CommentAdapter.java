@@ -33,6 +33,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         final Comment comment = commentList.get(position);
+        holder.dateView.setText(comment.dateFormatted());
         if (comment.getReview() != null && !comment.getReview().isEmpty()) {
             holder.textView.setText(comment.getReview());
         }
@@ -46,10 +47,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     public class CommentViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
+        TextView dateView;
 
         public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.comment_item_text);
+            dateView = itemView.findViewById(R.id.comment_item_date);
         }
     }
 }

@@ -36,7 +36,6 @@
             android:text="Отправить"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp"
             android:textSize="18sp"
             android:textColor="@color/colorPrimary"
             android:id="@+id/action_ok"/>

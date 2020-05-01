@@ -1,5 +1,6 @@
 package com.example.ocenika.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Comment {
@@ -56,5 +57,12 @@ public class Comment {
 
     public void setProfessor(int professor) {
         this.professor = professor;
+    }
+
+    public String dateFormatted() {
+        String pattern = "MM-dd-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String formattedDate = simpleDateFormat.format(this.created_at);
+        return formattedDate;
     }
 }

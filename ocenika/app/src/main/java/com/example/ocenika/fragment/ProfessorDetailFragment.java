@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ocenika.R;
 import com.example.ocenika.adapter.CommentAdapter;
-import com.example.ocenika.adapter.ProfessorAdapter;
 import com.example.ocenika.model.Comment;
 import com.example.ocenika.model.ProfessorList;
 import com.example.ocenika.service.APIService;
@@ -27,7 +26,6 @@ import com.example.ocenika.util.PreferenceUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,8 +41,8 @@ public class ProfessorDetailFragment extends Fragment implements CommentDialogFr
     public RecyclerView recyclerView;
     public CommentAdapter adapter;
 
+    private TextView ratingCountView;
     public int professorId;
-    public TextView fullNameView;
     public List<Comment> commentList = new ArrayList<>();
 
 
@@ -69,24 +67,34 @@ public class ProfessorDetailFragment extends Fragment implements CommentDialogFr
         return view;
     }
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         professorId = getArguments().getInt("id");
-        fullNameView = view.findViewById(R.id.professor_detail_full_name);
-        view.findViewById(R.id.professor_leave_comment).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (PreferenceUtils.getToken(getActivity()) != null && !PreferenceUtils.getToken(getActivity()).equals("")) {
-                    CommentDialogFragment commentDialog = CommentDialogFragment.newInstance(professorId);
-                    commentDialog.setTargetFragment(ProfessorDetailFragment.this, 1337);
-                    commentDialog.show(getFragmentManager(), "CommentDialog");
-                }
-                else {
-                    Toast.makeText(getActivity(), "Вам нужно войти", Toast.LENGTH_SHORT).show();
-                }
+        ratingCountView = view.findViewById(R.id.professor_rating_count);
+        view.findViewById(R.id.professor_leave_comment).setOnClickListener(openCommentDialog);
+        getProfessor();
+    }
+
+    public void fetchResponse(Response<ProfessorList> response) {
+        if (!response.isSuccessful()) {
+            Log.e("get professors, Code:", "" + response.code());
+            return;
+        }
+        if (response.body() != null) {
+            ProfessorList professor = response.body();
+            commentList.clear();
+            commentList.addAll(professor.getRatings());
+            adapter.notifyDataSetChanged();
+            ratingCountView.setText(professor.getRating_count() + "");
+            if (professor.getFull_name()!=null) {
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(professor.getFull_name());
             }
-        });
+        }
+    }
+
+    public void getProfessor() {
         Call<ProfessorList> call = apiService.getProfessorById(professorId);
         call.enqueue(new Callback<ProfessorList>() {
             @Override
@@ -101,27 +109,20 @@ public class ProfessorDetailFragment extends Fragment implements CommentDialogFr
         });
     }
 
-    public void fetchResponse(Response<ProfessorList> response) {
-        if (!response.isSuccessful()) {
-            Log.e("get professors, Code:", "" + response.code());
-            return;
-        }
-        if (response.body() != null) {
-            ProfessorList professor = response.body();
-            commentList.clear();
-            commentList.addAll(professor.getRatings());
-            adapter.notifyDataSetChanged();
-            fullNameView.setText(professor.getFull_name());
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(professor.getFull_name());
-        }
-    }
-
     @Override
     public void sendInput(Comment comment) {
-        System.out.println(comment.getReview());
-        commentList.add(comment);
-        int insertIndex = commentList.size();
-        System.out.println(insertIndex);
-        adapter.notifyItemInserted(insertIndex);
+        commentList.add(0, comment);
+        adapter.notifyItemInserted(0);
     }
+
+    private Button.OnClickListener openCommentDialog = view -> {
+        if (PreferenceUtils.getToken(getActivity()) != null && !PreferenceUtils.getToken(getActivity()).equals("")) {
+            CommentDialogFragment commentDialog = CommentDialogFragment.newInstance(professorId);
+            commentDialog.setTargetFragment(ProfessorDetailFragment.this, 1337);
+            commentDialog.show(getFragmentManager(), "CommentDialog");
+        }
+        else {
+            Toast.makeText(getActivity(), "Вам нужно войти", Toast.LENGTH_SHORT).show();
+        }
+    };
 }

@@ -13,12 +13,12 @@ public class ProfessorList {
     private int rating_count;
     private List<Comment> ratings;
     private List<Subject> subjects;
-    private List<ProfessorList> universities;
+    private List<UniversityList> universities;
 
     public ProfessorList() {
     }
 
-    public ProfessorList(int id, String first_name, String last_name, String patronymic, String avatar, int average_rating, int rating_count, List<Comment> ratings, List<Subject> subjects, List<ProfessorList> universities) {
+    public ProfessorList(int id, String first_name, String last_name, String patronymic, String avatar, int average_rating, int rating_count, List<Comment> ratings, List<Subject> subjects, List<UniversityList> universities) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -107,11 +107,11 @@ public class ProfessorList {
         this.subjects = subjects;
     }
 
-    public List<ProfessorList> getUniversities() {
+    public List<UniversityList> getUniversities() {
         return universities;
     }
 
-    public void setUniversities(List<ProfessorList> universities) {
+    public void setUniversities(List<UniversityList> universities) {
         this.universities = universities;
     }
 
@@ -125,8 +125,22 @@ public class ProfessorList {
 
     public String concatSubjects() {
         StringBuilder result = new StringBuilder();
-        for (Subject subject : subjects) {
-            result.append(subject.getAbbreviation()).append(" ");
+        for (int i = 0; i < subjects.size()-1; i++) {
+            result.append(subjects.get(i).getAbbreviation()).append(", ");
+        }
+        if (subjects.size() > 0) {
+            result.append(subjects.get(subjects.size() - 1).getAbbreviation());
+        }
+        return result.toString();
+    }
+
+    public String concatUniversities() {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < universities.size()-1; i++) {
+            result.append(universities.get(i).getAbbreviation()).append(", ");
+        }
+        if (universities.size() > 0) {
+            result.append(universities.get(universities.size() - 1).getAbbreviation());
         }
         return result.toString();
     }

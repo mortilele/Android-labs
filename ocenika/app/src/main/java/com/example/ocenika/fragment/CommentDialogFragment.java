@@ -20,6 +20,8 @@ import com.example.ocenika.model.Comment;
 import com.example.ocenika.service.APIService;
 import com.example.ocenika.util.PreferenceUtils;
 
+import java.util.Random;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,8 +38,8 @@ public class CommentDialogFragment extends DialogFragment {
 
     private Activity currentActivity;
     private int professorId;
-    private EditText mInput;
-    private TextView mActionOk, mActionCancel;
+    private EditText commentInput;
+    private TextView addCommentBtn, cancelBtn;
 
     public interface OnInputSelected{
         void sendInput(Comment comment);
@@ -61,33 +63,11 @@ public class CommentDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment, container, false);
-        mActionOk = view.findViewById(R.id.action_ok);
-        mActionCancel = view.findViewById(R.id.action_cancel);
-        mInput = view.findViewById(R.id.input);
-        mActionCancel.setOnClickListener(v -> getDialog().dismiss());
-        mActionOk.setOnClickListener(v -> {
-            String input = mInput.getText().toString();
-            if (!input.equals("")){
-                String token = PreferenceUtils.getToken(getActivity());
-                Comment comment = new Comment();
-                comment.setReview("new comment3ss");
-                comment.setEmail("alse2s@gmail.com");
-                comment.setProfessor(professorId);
-                Call<Comment> call = apiService.addComment(comment, "Token " + token);
-                call.enqueue(new Callback<Comment>() {
-                    @Override
-                    public void onResponse(Call<Comment> call, Response<Comment> response) {
-                        fetchPostComment(response);
-                    }
-
-                    @Override
-                    public void onFailure(Call<Comment> call, Throwable t) {
-                        Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-            getDialog().dismiss();
-        });
+        addCommentBtn = view.findViewById(R.id.action_ok);
+        cancelBtn = view.findViewById(R.id.action_cancel);
+        commentInput = view.findViewById(R.id.input);
+        cancelBtn.setOnClickListener(v -> getDialog().dismiss());
+        addCommentBtn.setOnClickListener(addCommentListener);
         return view;
     }
 
@@ -123,5 +103,38 @@ public class CommentDialogFragment extends DialogFragment {
         }
     }
 
+    public String fakeEmailGenerator() {
+        String CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder email = new StringBuilder();
+        Random rnd = new Random();
+        while (email.length() < 10) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * CHARSET.length());
+            email.append(CHARSET.charAt(index));
+        }
+        return email.toString() +  "@gmail.com";
+    }
 
+    private TextView.OnClickListener addCommentListener = view -> {
+        String input = commentInput.getText().toString();
+        if (!input.equals("")){
+            String token = PreferenceUtils.getToken(getActivity());
+            Comment comment = new Comment();
+            comment.setReview(input);
+            comment.setEmail(fakeEmailGenerator());
+            comment.setProfessor(professorId);
+            Call<Comment> call = apiService.addComment(comment, "Token " + token);
+            call.enqueue(new Callback<Comment>() {
+                @Override
+                public void onResponse(Call<Comment> call, Response<Comment> response) {
+                    fetchPostComment(response);
+                }
+
+                @Override
+                public void onFailure(Call<Comment> call, Throwable t) {
+                    Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        getDialog().dismiss();
+    };
 }
